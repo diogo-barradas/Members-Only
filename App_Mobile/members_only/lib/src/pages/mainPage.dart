@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:members_only/src/pages/home_page.dart';
-import 'package:members_only/src/pages/shopping_cart_page.dart';
-import 'package:members_only/src/themes/light_color.dart';
-import 'package:members_only/src/themes/theme.dart';
-import 'package:members_only/src/widgets/BottomNavigationBar/bottom_navigation_bar.dart';
-import 'package:members_only/src/widgets/title_text.dart';
-import 'package:members_only/src/widgets/extentions.dart';
+import 'package:flutter_ecommerce_app/src/pages/home_page.dart';
+import 'package:flutter_ecommerce_app/src/pages/shopping_cart_page.dart';
+import 'package:flutter_ecommerce_app/src/themes/light_color.dart';
+import 'package:flutter_ecommerce_app/src/themes/theme.dart';
+import 'package:flutter_ecommerce_app/src/widgets/BottomNavigationBar/bottom_navigation_bar.dart';
+import 'package:flutter_ecommerce_app/src/widgets/title_text.dart';
+import 'package:flutter_ecommerce_app/src/widgets/extentions.dart';
 
 class MainPage extends StatefulWidget {
   MainPage({Key key, this.title}) : super(key: key);

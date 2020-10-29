@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:members_only/src/model/product.dart';
-import 'package:members_only/src/themes/light_color.dart';
-import 'package:members_only/src/widgets/title_text.dart';
-import 'package:members_only/src/widgets/extentions.dart';
+import 'package:flutter_ecommerce_app/src/model/product.dart';
+import 'package:flutter_ecommerce_app/src/themes/light_color.dart';
+import 'package:flutter_ecommerce_app/src/widgets/title_text.dart';
+import 'package:flutter_ecommerce_app/src/widgets/extentions.dart';
 
 class ProductCard extends StatelessWidget {
   final Product product;
