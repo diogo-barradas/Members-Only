@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ecommerce_app/src/model/data.dart';
-import 'package:flutter_ecommerce_app/src/themes/light_color.dart';
-import 'package:flutter_ecommerce_app/src/themes/theme.dart';
-import 'package:flutter_ecommerce_app/src/widgets/title_text.dart';
-import 'package:flutter_ecommerce_app/src/widgets/extentions.dart';
+import 'package:members_only/src/model/data.dart';
+import 'package:members_only/src/themes/light_color.dart';
+import 'package:members_only/src/themes/theme.dart';
+import 'package:members_only/src/widgets/title_text.dart';
+import 'package:members_only/src/widgets/extentions.dart';
 
 class ProductDetailPage extends StatefulWidget {
   ProductDetailPage({Key key}) : super(key: key);

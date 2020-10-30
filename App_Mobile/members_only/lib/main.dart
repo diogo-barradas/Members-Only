@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ecommerce_app/src/config/route.dart';
-import 'package:flutter_ecommerce_app/src/pages/mainPage.dart';
-import 'package:flutter_ecommerce_app/src/pages/product_detail.dart';
-import 'package:flutter_ecommerce_app/src/widgets/customRoute.dart';
+import 'package:members_only/src/config/route.dart';
+import 'package:members_only/src/pages/mainPage.dart';
+import 'package:members_only/src/pages/product_detail.dart';
+import 'package:members_only/src/widgets/customRoute.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'src/themes/theme.dart';
@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'E-Commerce ',
+      title: 'Members Only',
       theme: AppTheme.lightTheme.copyWith(
         textTheme: GoogleFonts.muliTextTheme(
           Theme.of(context).textTheme,
