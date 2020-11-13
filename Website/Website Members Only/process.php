@@ -1,9 +1,9 @@
 <?php
-// Configure your Subject Prefix and Recipient here
+
 $subjectPrefix = '[Contact via website]';
-$emailTo       = '<YOUR_EMAIL_HERE>';
-$errors = array(); // array to hold validation errors
-$data   = array(); // array to pass back data
+$emailTo       = '<diogo100200@gmail.com>';
+$errors = array(); 
+$data   = array(); 
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name    = stripslashes(trim($_POST['name']));
     $email   = stripslashes(trim($_POST['email']));
@@ -21,7 +21,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($message)) {
         $errors['message'] = 'Message is required.';
     }
-    // if there are any errors in our errors array, return a success boolean or false
     if (!empty($errors)) {
         $data['success'] = false;
         $data['errors']  = $errors;
@@ -46,7 +45,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
         $data['success'] = true;
         $data['message'] = 'Congratulations. Your message has been sent successfully';
     }
-    // return all our data to an AJAX call
     echo json_encode($data);
 }
 

@@ -1,16 +1,7 @@
-/*! jQuery UI - v1.12.1 - 2016-09-14
-* http://jqueryui.com
-* Includes: widget.js, position.js, data.js, disable-selection.js, effect.js, effects/effect-blind.js, effects/effect-bounce.js, effects/effect-clip.js, effects/effect-drop.js, effects/effect-explode.js, effects/effect-fade.js, effects/effect-fold.js, effects/effect-highlight.js, effects/effect-puff.js, effects/effect-pulsate.js, effects/effect-scale.js, effects/effect-shake.js, effects/effect-size.js, effects/effect-slide.js, effects/effect-transfer.js, focusable.js, form-reset-mixin.js, jquery-1-7.js, keycode.js, labels.js, scroll-parent.js, tabbable.js, unique-id.js, widgets/accordion.js, widgets/autocomplete.js, widgets/button.js, widgets/checkboxradio.js, widgets/controlgroup.js, widgets/datepicker.js, widgets/dialog.js, widgets/draggable.js, widgets/droppable.js, widgets/menu.js, widgets/mouse.js, widgets/progressbar.js, widgets/resizable.js, widgets/selectable.js, widgets/selectmenu.js, widgets/slider.js, widgets/sortable.js, widgets/spinner.js, widgets/tabs.js, widgets/tooltip.js
-* Copyright jQuery Foundation and other contributors; Licensed MIT */
-
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
-
-		// AMD. Register as an anonymous module.
 		define([ "jquery" ], factory );
 	} else {
-
-		// Browser globals
 		factory( jQuery );
 	}
 }(function( $ ) {
@@ -18,24 +9,6 @@
 $.ui = $.ui || {};
 
 var version = $.ui.version = "1.12.1";
-
-
-/*!
- * jQuery UI Widget 1.12.1
- * http://jqueryui.com
- *
- * Copyright jQuery Foundation and other contributors
- * Released under the MIT license.
- * http://jquery.org/license
- */
-
-//>>label: Widget
-//>>group: Core
-//>>description: Provides a factory for creating stateful widgets with a common API.
-//>>docs: http://api.jqueryui.com/jQuery.widget/
-//>>demos: http://jqueryui.com/widget/
-
-
 
 var widgetUuid = 0;
 var widgetSlice = Array.prototype.slice;
@@ -45,14 +18,11 @@ $.cleanData = ( function( orig ) {
 		var events, elem, i;
 		for ( i = 0; ( elem = elems[ i ] ) != null; i++ ) {
 			try {
-
-				// Only trigger remove when necessary to save time
 				events = $._data( elem, "events" );
 				if ( events && events.remove ) {
 					$( elem ).triggerHandler( "remove" );
 				}
 
-			// Http://bugs.jquery.com/ticket/8235
 			} catch ( e ) {}
 		}
 		orig( elems );
@@ -61,11 +31,7 @@ $.cleanData = ( function( orig ) {
 
 $.widget = function( name, base, prototype ) {
 	var existingConstructor, constructor, basePrototype;
-
-	// ProxiedPrototype allows the provided prototype to remain unmodified
-	// so that it can be used as a mixin for multiple widgets (#8876)
 	var proxiedPrototype = {};
-
 	var namespace = name.split( "." )[ 0 ];
 	name = name.split( "." )[ 1 ];
 	var fullName = namespace + "-" + name;
@@ -79,7 +45,6 @@ $.widget = function( name, base, prototype ) {
 		prototype = $.extend.apply( null, [ {} ].concat( prototype ) );
 	}
 
-	// Create selector for plugin
 	$.expr[ ":" ][ fullName.toLowerCase() ] = function( elem ) {
 		return !!$.data( elem, fullName );
 	};
@@ -88,36 +53,23 @@ $.widget = function( name, base, prototype ) {
 	existingConstructor = $[ namespace ][ name ];
 	constructor = $[ namespace ][ name ] = function( options, element ) {
 
-		// Allow instantiation without "new" keyword
 		if ( !this._createWidget ) {
 			return new constructor( options, element );
 		}
 
-		// Allow instantiation without initializing for simple inheritance
-		// must use "new" keyword (the code above always passes args)
 		if ( arguments.length ) {
 			this._createWidget( options, element );
 		}
 	};
 
-	// Extend with the existing constructor to carry over any static properties
 	$.extend( constructor, existingConstructor, {
 		version: prototype.version,
-
-		// Copy the object used to create the prototype in case we need to
-		// redefine the widget later
 		_proto: $.extend( {}, prototype ),
-
-		// Track widgets that inherit from this widget in case this widget is
-		// redefined after a widget inherits from it
 		_childConstructors: []
 	} );
 
 	basePrototype = new base();
 
-	// We need to make the options hash a property directly on the new instance
-	// otherwise we'll modify the options hash on the prototype that we're
-	// inheriting from
 	basePrototype.options = $.widget.extend( {}, basePrototype.options );
 	$.each( prototype, function( prop, value ) {
 		if ( !$.isFunction( value ) ) {
@@ -151,10 +103,6 @@ $.widget = function( name, base, prototype ) {
 		} )();
 	} );
 	constructor.prototype = $.widget.extend( basePrototype, {
-
-		// TODO: remove support for widgetEventPrefix
-		// always use the name + a colon as the prefix, e.g., draggable:start
-		// don't prefix for widgets that aren't DOM-based
 		widgetEventPrefix: existingConstructor ? ( basePrototype.widgetEventPrefix || name ) : name
 	}, proxiedPrototype, {
 		constructor: constructor,
@@ -163,22 +111,14 @@ $.widget = function( name, base, prototype ) {
 		widgetFullName: fullName
 	} );
 
-	// If this widget is being redefined then we need to find all widgets that
-	// are inheriting from it and redefine all of them so that they inherit from
-	// the new version of this widget. We're essentially trying to replace one
-	// level in the prototype chain.
 	if ( existingConstructor ) {
 		$.each( existingConstructor._childConstructors, function( i, child ) {
 			var childPrototype = child.prototype;
 
-			// Redefine the child widget using the same prototype that was
-			// originally used, but inherit from the new version of the base
 			$.widget( childPrototype.namespace + "." + childPrototype.widgetName, constructor,
 				child._proto );
 		} );
 
-		// Remove the list of existing child constructors from the old constructor
-		// so the old child constructors can be garbage collected
 		delete existingConstructor._childConstructors;
 	} else {
 		base._childConstructors.push( constructor );
@@ -201,15 +141,12 @@ $.widget.extend = function( target ) {
 			value = input[ inputIndex ][ key ];
 			if ( input[ inputIndex ].hasOwnProperty( key ) && value !== undefined ) {
 
-				// Clone objects
 				if ( $.isPlainObject( value ) ) {
 					target[ key ] = $.isPlainObject( target[ key ] ) ?
 						$.widget.extend( {}, target[ key ], value ) :
 
-						// Don't extend strings, arrays, etc. with objects
 						$.widget.extend( {}, value );
 
-				// Copy everything else by reference
 				} else {
 					target[ key ] = value;
 				}
@@ -228,8 +165,6 @@ $.widget.bridge = function( name, object ) {
 
 		if ( isMethodCall ) {
 
-			// If this is an empty collection, we need to have the instance method
-			// return undefined instead of the jQuery instance
 			if ( !this.length && options === "instance" ) {
 				returnValue = undefined;
 			} else {
@@ -265,7 +200,6 @@ $.widget.bridge = function( name, object ) {
 			}
 		} else {
 
-			// Allow multiple hashes to be passed on init
 			if ( args.length ) {
 				options = $.widget.extend.apply( null, [ options ].concat( args ) );
 			}
@@ -297,9 +231,7 @@ $.Widget.prototype = {
 
 	options: {
 		classes: {},
-		disabled: false,
-
-		// Callbacks
+		disabled: false, 
 		create: null
 	},
 
@@ -325,10 +257,7 @@ $.Widget.prototype = {
 			} );
 			this.document = $( element.style ?
 
-				// Element within the document
 				element.ownerDocument :
-
-				// Element is window or document
 				element.document || element );
 			this.window = $( this.document[ 0 ].defaultView || this.document[ 0 ].parentWindow );
 		}
@@ -366,8 +295,6 @@ $.Widget.prototype = {
 			that._removeClass( value, key );
 		} );
 
-		// We can probably remove the unbind calls in 2.0
-		// all event bindings should go through this._on()
 		this.element
 			.off( this.eventNamespace )
 			.removeData( this.widgetFullName );
@@ -375,7 +302,6 @@ $.Widget.prototype = {
 			.off( this.eventNamespace )
 			.removeAttr( "aria-disabled" );
 
-		// Clean up events and states
 		this.bindings.off( this.eventNamespace );
 	},
 
@@ -393,13 +319,11 @@ $.Widget.prototype = {
 
 		if ( arguments.length === 0 ) {
 
-			// Don't return a reference to the internal hash
 			return $.widget.extend( {}, this.options );
 		}
 
 		if ( typeof key === "string" ) {
 
-			// Handle nested keys, e.g., "foo.bar" => { foo: { bar: ___ } }
 			options = {};
 			parts = key.split( "." );
 			key = parts.shift();
@@ -462,17 +386,9 @@ $.Widget.prototype = {
 				continue;
 			}
 
-			// We are doing this to create a new jQuery object because the _removeClass() call
-			// on the next line is going to destroy the reference to the current elements being
-			// tracked. We need to save a copy of this collection so that we can add the new classes
-			// below.
 			elements = $( currentElements.get() );
 			this._removeClass( currentElements, classKey );
 
-			// We don't use _addClass() here, because that uses this.options.classes
-			// for generating the string of classes. We want to use the value passed in from
-			// _setOption(), this is the new value of the classes option which was passed to
-			// _setOption(). We pass this value directly to _classes().
 			elements.addClass( this._classes( {
 				element: elements,
 				keys: classKey,
@@ -485,7 +401,6 @@ $.Widget.prototype = {
 	_setOptionDisabled: function( value ) {
 		this._toggleClass( this.widget(), this.widgetFullName + "-disabled", null, !!value );
 
-		// If the widget is becoming disabled, then nothing is interactive
 		if ( value ) {
 			this._removeClass( this.hoverable, null, "ui-state-hover" );
 			this._removeClass( this.focusable, null, "ui-state-focus" );
@@ -574,14 +489,12 @@ $.Widget.prototype = {
 		var delegateElement;
 		var instance = this;
 
-		// No suppressDisabledCheck flag, shuffle arguments
 		if ( typeof suppressDisabledCheck !== "boolean" ) {
 			handlers = element;
 			element = suppressDisabledCheck;
 			suppressDisabledCheck = false;
 		}
 
-		// No element argument, shuffle and use this.element
 		if ( !handlers ) {
 			handlers = element;
 			element = this.element;
@@ -594,9 +507,6 @@ $.Widget.prototype = {
 		$.each( handlers, function( event, handler ) {
 			function handlerProxy() {
 
-				// Allow widgets to customize the disabled handling
-				// - disabled as an array instead of boolean
-				// - disabled class as method for disabling individual parts
 				if ( !suppressDisabledCheck &&
 						( instance.options.disabled === true ||
 						$( this ).hasClass( "ui-state-disabled" ) ) ) {
@@ -606,7 +516,6 @@ $.Widget.prototype = {
 					.apply( instance, arguments );
 			}
 
-			// Copy the guid so direct unbinding works
 			if ( typeof handler !== "string" ) {
 				handlerProxy.guid = handler.guid =
 					handler.guid || handlerProxy.guid || $.guid++;
@@ -629,7 +538,6 @@ $.Widget.prototype = {
 			this.eventNamespace;
 		element.off( eventName ).off( eventName );
 
-		// Clear the stack to avoid memory leaks (#10056)
 		this.bindings = $( this.bindings.not( element ).get() );
 		this.focusable = $( this.focusable.not( element ).get() );
 		this.hoverable = $( this.hoverable.not( element ).get() );
@@ -678,11 +586,8 @@ $.Widget.prototype = {
 			type :
 			this.widgetEventPrefix + type ).toLowerCase();
 
-		// The original event may come from any element
-		// so we need to reset the target on the new event
 		event.target = this.element[ 0 ];
 
-		// Copy original event properties over to the new event
 		orig = event.originalEvent;
 		if ( orig ) {
 			for ( prop in orig ) {
@@ -741,25 +646,6 @@ $.each( { show: "fadeIn", hide: "fadeOut" }, function( method, defaultEffect ) {
 } );
 
 var widget = $.widget;
-
-
-/*!
- * jQuery UI Position 1.12.1
- * http://jqueryui.com
- *
- * Copyright jQuery Foundation and other contributors
- * Released under the MIT license.
- * http://jquery.org/license
- *
- * http://api.jqueryui.com/position/
- */
-
-//>>label: Position
-//>>group: Core
-//>>description: Positions elements relative to other elements.
-//>>docs: http://api.jqueryui.com/position/
-//>>demos: http://jqueryui.com/position/
-
 
 ( function() {
 var cachedScrollbarWidth,
@@ -875,7 +761,6 @@ $.fn.position = function( options ) {
 		return _position.apply( this, arguments );
 	}
 
-	// Make a copy, we don't want to modify arguments
 	options = $.extend( {}, options );
 
 	var atOffset, targetWidth, targetHeight, targetOffset, basePosition, dimensions,
@@ -888,18 +773,14 @@ $.fn.position = function( options ) {
 	dimensions = getDimensions( target );
 	if ( target[ 0 ].preventDefault ) {
 
-		// Force left top to allow flipping
 		options.at = "left top";
 	}
 	targetWidth = dimensions.width;
 	targetHeight = dimensions.height;
 	targetOffset = dimensions.offset;
 
-	// Clone to reuse original targetOffset later
 	basePosition = $.extend( {}, targetOffset );
 
-	// Force my and at to have valid horizontal and vertical positions
-	// if a value is missing or invalid, it will be converted to center
 	$.each( [ "my", "at" ], function() {
 		var pos = ( options[ this ] || "" ).split( " " ),
 			horizontalOffset,
@@ -915,7 +796,6 @@ $.fn.position = function( options ) {
 		pos[ 0 ] = rhorizontal.test( pos[ 0 ] ) ? pos[ 0 ] : "center";
 		pos[ 1 ] = rvertical.test( pos[ 1 ] ) ? pos[ 1 ] : "center";
 
-		// Calculate offsets
 		horizontalOffset = roffset.exec( pos[ 0 ] );
 		verticalOffset = roffset.exec( pos[ 1 ] );
 		offsets[ this ] = [
@@ -923,14 +803,12 @@ $.fn.position = function( options ) {
 			verticalOffset ? verticalOffset[ 0 ] : 0
 		];
 
-		// Reduce to just the positions without the offsets
 		options[ this ] = [
 			rposition.exec( pos[ 0 ] )[ 0 ],
 			rposition.exec( pos[ 1 ] )[ 0 ]
 		];
 	} );
 
-	// Normalize collision option
 	if ( collision.length === 1 ) {
 		collision[ 1 ] = collision[ 0 ];
 	}
@@ -1006,7 +884,6 @@ $.fn.position = function( options ) {
 
 		if ( options.using ) {
 
-			// Adds feedback as second argument to using callback, if present
 			using = function( props ) {
 				var left = targetOffset.left - position.left,
 					right = left + targetWidth - elemWidth,
@@ -1060,20 +937,16 @@ $.ui.position = {
 				overRight = collisionPosLeft + data.collisionWidth - outerWidth - withinOffset,
 				newOverRight;
 
-			// Element is wider than within
 			if ( data.collisionWidth > outerWidth ) {
 
-				// Element is initially over the left side of within
 				if ( overLeft > 0 && overRight <= 0 ) {
 					newOverRight = position.left + overLeft + data.collisionWidth - outerWidth -
 						withinOffset;
 					position.left += overLeft - newOverRight;
 
-				// Element is initially over right side of within
 				} else if ( overRight > 0 && overLeft <= 0 ) {
 					position.left = withinOffset;
 
-				// Element is initially over both left and right sides of within
 				} else {
 					if ( overLeft > overRight ) {
 						position.left = withinOffset + outerWidth - data.collisionWidth;
@@ -1082,15 +955,12 @@ $.ui.position = {
 					}
 				}
 
-			// Too far left -> align with left edge
 			} else if ( overLeft > 0 ) {
 				position.left += overLeft;
 
-			// Too far right -> align with right edge
 			} else if ( overRight > 0 ) {
 				position.left -= overRight;
 
-			// Adjust based on position and margin
 			} else {
 				position.left = max( position.left - collisionPosLeft, position.left );
 			}
@@ -1104,20 +974,16 @@ $.ui.position = {
 				overBottom = collisionPosTop + data.collisionHeight - outerHeight - withinOffset,
 				newOverBottom;
 
-			// Element is taller than within
 			if ( data.collisionHeight > outerHeight ) {
 
-				// Element is initially over the top of within
 				if ( overTop > 0 && overBottom <= 0 ) {
 					newOverBottom = position.top + overTop + data.collisionHeight - outerHeight -
 						withinOffset;
 					position.top += overTop - newOverBottom;
 
-				// Element is initially over bottom of within
 				} else if ( overBottom > 0 && overTop <= 0 ) {
 					position.top = withinOffset;
 
-				// Element is initially over both top and bottom of within
 				} else {
 					if ( overTop > overBottom ) {
 						position.top = withinOffset + outerHeight - data.collisionHeight;
@@ -1126,15 +992,12 @@ $.ui.position = {
 					}
 				}
 
-			// Too far up -> align with top
 			} else if ( overTop > 0 ) {
 				position.top += overTop;
 
-			// Too far down -> align with bottom edge
 			} else if ( overBottom > 0 ) {
 				position.top -= overBottom;
 
-			// Adjust based on position and margin
 			} else {
 				position.top = max( position.top - collisionPosTop, position.top );
 			}
@@ -1230,22 +1093,6 @@ $.ui.position = {
 
 var position = $.ui.position;
 
-
-/*!
- * jQuery UI :data 1.12.1
- * http://jqueryui.com
- *
- * Copyright jQuery Foundation and other contributors
- * Released under the MIT license.
- * http://jquery.org/license
- */
-
-//>>label: :data Selector
-//>>group: Core
-//>>description: Selects elements which have data stored under the specified key.
-//>>docs: http://api.jqueryui.com/data-selector/
-
-
 var data = $.extend( $.expr[ ":" ], {
 	data: $.expr.createPseudo ?
 		$.expr.createPseudo( function( dataName ) {
@@ -1254,28 +1101,10 @@ var data = $.extend( $.expr[ ":" ], {
 			};
 		} ) :
 
-		// Support: jQuery <1.8
 		function( elem, i, match ) {
 			return !!$.data( elem, match[ 3 ] );
 		}
 } );
-
-/*!
- * jQuery UI Disable Selection 1.12.1
- * http://jqueryui.com
- *
- * Copyright jQuery Foundation and other contributors
- * Released under the MIT license.
- * http://jquery.org/license
- */
-
-//>>label: disableSelection
-//>>group: Core
-//>>description: Disable selection of text content within the set of matched elements.
-//>>docs: http://api.jqueryui.com/disableSelection/
-
-// This file is deprecated
-
 
 var disableSelection = $.fn.extend( {
 	disableSelection: ( function() {
@@ -1296,56 +1125,25 @@ var disableSelection = $.fn.extend( {
 } );
 
 
-/*!
- * jQuery UI Effects 1.12.1
- * http://jqueryui.com
- *
- * Copyright jQuery Foundation and other contributors
- * Released under the MIT license.
- * http://jquery.org/license
- */
-
-//>>label: Effects Core
-//>>group: Effects
-// jscs:disable maximumLineLength
-//>>description: Extends the internal jQuery effects. Includes morphing and easing. Required by all other effects.
-// jscs:enable maximumLineLength
-//>>docs: http://api.jqueryui.com/category/effects-core/
-//>>demos: http://jqueryui.com/effect/
-
-
 
 var dataSpace = "ui-effects-",
 	dataSpaceStyle = "ui-effects-style",
 	dataSpaceAnimated = "ui-effects-animated",
 
-	// Create a local jQuery because jQuery Color relies on it and the
-	// global may not exist with AMD and a custom build (#10199)
 	jQuery = $;
 
 $.effects = {
 	effect: {}
 };
 
-/*!
- * jQuery Color Animations v2.1.2
- * https://github.com/jquery/jquery-color
- *
- * Copyright 2014 jQuery Foundation and other contributors
- * Released under the MIT license.
- * http://jquery.org/license
- *
- * Date: Wed Jan 16 08:47:09 2013 -0600
- */
+
 ( function( jQuery, undefined ) {
 
 	var stepHooks = "backgroundColor borderBottomColor borderLeftColor borderRightColor " +
 		"borderTopColor color columnRuleColor outlineColor textDecorationColor textEmphasisColor",
 
-	// Plusequals test for += 100 -= 100
 	rplusequals = /^([\-+])=\s*(\d+\.?\d*)/,
 
-	// A set of RE's that can match strings and generate color tuples.
 	stringParsers = [ {
 			re: /rgba?\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*(?:,\s*(\d?(?:\.\d+)?)\s*)?\)/,
 			parse: function( execResult ) {
@@ -1368,7 +1166,6 @@ $.effects = {
 			}
 		}, {
 
-			// This regex ignores A-F because it's compared against an already lowercased string
 			re: /#([a-f0-9]{2})([a-f0-9]{2})([a-f0-9]{2})/,
 			parse: function( execResult ) {
 				return [
@@ -1379,7 +1176,6 @@ $.effects = {
 			}
 		}, {
 
-			// This regex ignores A-F because it's compared against an already lowercased string
 			re: /#([a-f0-9])([a-f0-9])([a-f0-9])/,
 			parse: function( execResult ) {
 				return [
@@ -1401,7 +1197,6 @@ $.effects = {
 			}
 		} ],
 
-	// JQuery.Color( )
 	color = jQuery.Color = function( color, green, blue, alpha ) {
 		return new jQuery.Color.fn.parse( color, green, blue, alpha );
 	},
@@ -1455,21 +1250,15 @@ $.effects = {
 	},
 	support = color.support = {},
 
-	// Element for support tests
 	supportElem = jQuery( "<p>" )[ 0 ],
 
-	// Colors = jQuery.Color.names
 	colors,
 
-	// Local aliases of functions called often
 	each = jQuery.each;
 
-// Determine rgba support immediately
 supportElem.style.cssText = "background-color:rgba(1,1,1,.5)";
 support.rgba = supportElem.style.backgroundColor.indexOf( "rgba" ) > -1;
 
-// Define cache name and alpha properties
-// for rgba and hsla spaces
 each( spaces, function( spaceName, space ) {
 	space.cache = "_" + spaceName;
 	space.props.alpha = {
@@ -1486,23 +1275,17 @@ function clamp( value, prop, allowEmpty ) {
 		return ( allowEmpty || !prop.def ) ? null : prop.def;
 	}
 
-	// ~~ is an short way of doing floor for positive numbers
 	value = type.floor ? ~~value : parseFloat( value );
 
-	// IE will pass in empty strings as value for alpha,
-	// which will hit this case
 	if ( isNaN( value ) ) {
 		return prop.def;
 	}
 
 	if ( type.mod ) {
 
-		// We add mod before modding to make sure that negatives values
-		// get converted properly: -10 -> 350
 		return ( value + type.mod ) % type.mod;
 	}
 
-	// For now all property types without mod have min and max
 	return 0 > value ? 0 : type.max < value ? type.max : value;
 }
 
@@ -1521,28 +1304,21 @@ function stringParse( string ) {
 		if ( values ) {
 			parsed = inst[ spaceName ]( values );
 
-			// If this was an rgba parse the assignment might happen twice
-			// oh well....
 			inst[ spaces[ spaceName ].cache ] = parsed[ spaces[ spaceName ].cache ];
 			rgba = inst._rgba = parsed._rgba;
 
-			// Exit each( stringParsers ) here because we matched
 			return false;
 		}
 	} );
 
-	// Found a stringParser that handled it
 	if ( rgba.length ) {
 
-		// If this came from a parsed string, force "transparent" when alpha is 0
-		// chrome, (and maybe others) return "transparent" as rgba(0,0,0,0)
 		if ( rgba.join() === "0,0,0,0" ) {
 			jQuery.extend( rgba, colors.transparent );
 		}
 		return inst;
 	}
 
-	// Named colors
 	return colors[ string ];
 }
 
@@ -1561,7 +1337,6 @@ color.fn = jQuery.extend( color.prototype, {
 			type = jQuery.type( red ),
 			rgba = this._rgba = [];
 
-		// More than 1 argument specified - assume ( red, green, blue, alpha )
 		if ( green !== undefined ) {
 			red = [ red, green, blue, alpha ];
 			type = "array";
@@ -1590,27 +1365,20 @@ color.fn = jQuery.extend( color.prototype, {
 					var cache = space.cache;
 					each( space.props, function( key, prop ) {
 
-						// If the cache doesn't exist, and we know how to convert
 						if ( !inst[ cache ] && space.to ) {
 
-							// If the value was null, we don't need to copy it
-							// if the key was alpha, we don't need to copy it either
 							if ( key === "alpha" || red[ key ] == null ) {
 								return;
 							}
 							inst[ cache ] = space.to( inst._rgba );
 						}
 
-						// This is the only case where we allow nulls for ALL properties.
-						// call clamp with alwaysAllowEmpty
 						inst[ cache ][ prop.idx ] = clamp( red[ key ], prop, true );
 					} );
 
-					// Everything defined but alpha?
 					if ( inst[ cache ] &&
 							jQuery.inArray( null, inst[ cache ].slice( 0, 3 ) ) < 0 ) {
 
-						// Use the default of 1
 						inst[ cache ][ 3 ] = 1;
 						if ( space.from ) {
 							inst._rgba = space.from( inst[ cache ] );
@@ -1667,12 +1435,10 @@ color.fn = jQuery.extend( color.prototype, {
 				endValue = end[ index ],
 				type = propTypes[ prop.type ] || {};
 
-			// If null, don't override start value
 			if ( endValue === null ) {
 				return;
 			}
 
-			// If null - use end
 			if ( startValue === null ) {
 				result[ index ] = endValue;
 			} else {
@@ -1690,7 +1456,6 @@ color.fn = jQuery.extend( color.prototype, {
 	},
 	blend: function( opaque ) {
 
-		// If we are already opaque - return ourself
 		if ( this._rgba[ 3 ] === 1 ) {
 			return this;
 		}
@@ -1723,7 +1488,6 @@ color.fn = jQuery.extend( color.prototype, {
 					v = i > 2 ? 1 : 0;
 				}
 
-				// Catch 1 and 2
 				if ( i && i < 3 ) {
 					v = Math.round( v * 100 ) + "%";
 				}
@@ -1746,7 +1510,6 @@ color.fn = jQuery.extend( color.prototype, {
 
 		return "#" + jQuery.map( rgba, function( v ) {
 
-			// Default to 0 when nulls exist
 			v = ( v || 0 ).toString( 16 );
 			return v.length === 1 ? "0" + v : v;
 		} ).join( "" );
@@ -1756,9 +1519,6 @@ color.fn = jQuery.extend( color.prototype, {
 	}
 } );
 color.fn.parse.prototype = color.fn;
-
-// Hsla conversions adapted from:
-// https://code.google.com/p/maashaack/source/browse/packages/graphics/trunk/src/graphics/colors/HUE2RGB.as?r=5021
 
 function hue2rgb( p, q, h ) {
 	h = ( h + 1 ) % 1;
@@ -1799,8 +1559,6 @@ spaces.hsla.to = function( rgba ) {
 		h = ( 60 * ( r - g ) / diff ) + 240;
 	}
 
-	// Chroma (diff) == 0 means greyscale which, by definition, saturation = 0%
-	// otherwise, saturation is based on the ratio of chroma (diff) to lightness (add)
 	if ( diff === 0 ) {
 		s = 0;
 	} else if ( l <= 0.5 ) {
@@ -1836,10 +1594,8 @@ each( spaces, function( spaceName, space ) {
 		to = space.to,
 		from = space.from;
 
-	// Makes rgba() and hsla()
 	color.fn[ spaceName ] = function( value ) {
 
-		// Generate a cache for this space if it doesn't exist
 		if ( to && !this[ cache ] ) {
 			this[ cache ] = to( this._rgba );
 		}
@@ -1869,10 +1625,8 @@ each( spaces, function( spaceName, space ) {
 		}
 	};
 
-	// Makes red() green() blue() alpha() hue() saturation() lightness()
 	each( props, function( key, prop ) {
 
-		// Alpha is included in more than one space
 		if ( color.fn[ key ] ) {
 			return;
 		}
@@ -1906,8 +1660,6 @@ each( spaces, function( spaceName, space ) {
 	} );
 } );
 
-// Add cssHook and .fx.step function for each named hook.
-// accept a space separated string of properties
 color.hook = function( hook ) {
 	var hooks = hook.split( " " );
 	each( hooks, function( i, hook ) {
@@ -1943,8 +1695,6 @@ color.hook = function( hook ) {
 					elem.style[ hook ] = value;
 				} catch ( e ) {
 
-					// Wrapped to prevent IE from throwing errors on "invalid" values like
-					// 'auto' or 'inherit'
 				}
 			}
 		};
@@ -1973,12 +1723,8 @@ jQuery.cssHooks.borderColor = {
 	}
 };
 
-// Basic color names only.
-// Usage of any of the other color names requires adding yourself or including
-// jquery.color.svg-names.js.
 colors = jQuery.Color.names = {
 
-	// 4.1. Basic color keywords
 	aqua: "#00ffff",
 	black: "#000000",
 	blue: "#0000ff",
@@ -1996,7 +1742,6 @@ colors = jQuery.Color.names = {
 	white: "#ffffff",
 	yellow: "#ffff00",
 
-	// 4.2.3. "transparent" color keyword
 	transparent: [ null, null, null, 0 ],
 
 	_default: "#ffffff"
@@ -2004,9 +1749,6 @@ colors = jQuery.Color.names = {
 
 } )( jQuery );
 
-/******************************************************************************/
-/****************************** CLASS ANIMATIONS ******************************/
-/******************************************************************************/
 ( function() {
 
 var classAnimationActions = [ "add", "remove", "toggle" ],
@@ -2050,7 +1792,6 @@ function getElementStyles( elem ) {
 			}
 		}
 
-	// Support: Opera, IE <9
 	} else {
 		for ( key in style ) {
 			if ( typeof style[ key ] === "string" ) {
@@ -2080,7 +1821,6 @@ function styleDifference( oldStyle, newStyle ) {
 	return diff;
 }
 
-// Support: jQuery <1.8
 if ( !$.fn.addBack ) {
 	$.fn.addBack = function( selector ) {
 		return this.add( selector == null ?
@@ -2098,7 +1838,6 @@ $.effects.animateClass = function( value, duration, easing, callback ) {
 			applyClassChange,
 			allAnimations = o.children ? animated.find( "*" ).addBack() : animated;
 
-		// Map the animated objects to store the original styles.
 		allAnimations = allAnimations.map( function() {
 			var el = $( this );
 			return {
@@ -2107,7 +1846,6 @@ $.effects.animateClass = function( value, duration, easing, callback ) {
 			};
 		} );
 
-		// Apply class change
 		applyClassChange = function() {
 			$.each( classAnimationActions, function( i, action ) {
 				if ( value[ action ] ) {
@@ -2117,14 +1855,12 @@ $.effects.animateClass = function( value, duration, easing, callback ) {
 		};
 		applyClassChange();
 
-		// Map all animated objects again - calculate new styles and diff
 		allAnimations = allAnimations.map( function() {
 			this.end = getElementStyles( this.el[ 0 ] );
 			this.diff = styleDifference( this.start, this.end );
 			return this;
 		} );
 
-		// Apply original class
 		animated.attr( "class", baseClass );
 
 		// Map all animated objects again - this time collecting a promise
@@ -12047,7 +11783,6 @@ $.widget( "ui.dialog", {
 			this.options.title = this.originalTitle;
 		}
 
-		// Dialogs can't be disabled
 		if ( this.options.disabled ) {
 			this.options.disabled = false;
 		}
@@ -12101,7 +11836,6 @@ $.widget( "ui.dialog", {
 			.removeUniqueId()
 			.css( this.originalCss )
 
-			// Without detaching first, the following becomes really slow
 			.detach();
 
 		this.uiDialog.remove();
@@ -12112,7 +11846,6 @@ $.widget( "ui.dialog", {
 
 		next = originalPosition.parent.children().eq( originalPosition.index );
 
-		// Don't try to place the dialog next to itself (#8613)
 		if ( next.length && next[ 0 ] !== this.element[ 0 ] ) {
 			next.before( this.element );
 		} else {
@@ -12141,9 +11874,6 @@ $.widget( "ui.dialog", {
 
 		if ( !this.opener.filter( ":focusable" ).trigger( "focus" ).length ) {
 
-			// Hiding a focused element doesn't trigger blur in WebKit
-			// so in case we have nothing to focus on, explicitly blur the active element
-			// https://bugs.webkit.org/show_bug.cgi?id=47182
 			$.ui.safeBlur( $.ui.safeActiveElement( this.document[ 0 ] ) );
 		}
 
@@ -18679,8 +18409,6 @@ $.widget( "ui.tooltip", {
 	}
 } );
 
-// DEPRECATED
-// TODO: Switch return back to widget declaration at top of file when this is removed
 if ( $.uiBackCompat !== false ) {
 
 	// Backcompat for tooltipClass option
