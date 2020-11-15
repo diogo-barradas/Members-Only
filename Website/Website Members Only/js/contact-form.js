@@ -1,5 +1,3 @@
-
-
 (function ($, window, document, undefined) {
     'use strict';
 
@@ -49,7 +47,6 @@
         }).fail(function (data) {
             console.log(data)
         });
-
         e.preventDefault();
     });
 }(jQuery, window, document));

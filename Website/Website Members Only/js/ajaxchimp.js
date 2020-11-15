@@ -4,12 +4,12 @@
 
     $.ajaxChimp = {
         responses: {
-            'We have sent you a confirmation email'                                             : 0,
-            'Please enter a value'                                                              : 1,
-            'An email address must contain a single @'                                          : 2,
-            'The domain portion of the email address is invalid (the portion after the @: )'    : 3,
-            'The username portion of the email address is invalid (the portion before the @: )' : 4,
-            'This email address looks fake or invalid. Please enter a real email address'       : 5
+            'Enviamos a você um e-mail de confirmação'                                      : 0,
+            'Por favor insira um valor'                                                     : 1,
+            'Um endereço de e-mail deve conter um único @'                                  : 2,
+            'A parte do domínio do endereço de e-mail é inválida'                           : 3,
+            'A parte do nome de usuário do endereço de e-mail é inválida'                   : 4,
+            'Este endereço de e-mail parece inválido. Por favor, insira um endereço de e-mail válido'  : 5
         },
         translations: {
             'en': null
@@ -39,7 +39,7 @@
                 var msg;
                 function successCallback(resp) {
                     if (resp.result === 'success') {
-                        msg = 'We have sent you a confirmation email';
+                        msg = 'Enviamos a você um e-mail de confirmação';
                         label.removeClass('error').addClass('valid');
                         email.removeClass('error').addClass('valid');
                     } else {
@@ -66,8 +66,6 @@
                             msg = resp.msg;
                         }
                     }
-
-                    // Translate and display message
                     if (
                         settings.language !== 'en'
                         && $.ajaxChimp.responses[msg] !== undefined
@@ -101,7 +99,7 @@
                     }
                 });
 
-                var submitMsg = 'Submitting...';
+                var submitMsg = 'Enviando...';
                 if(
                     settings.language !== 'en'
                     && $.ajaxChimp.translations
