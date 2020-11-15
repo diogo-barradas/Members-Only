@@ -1,6 +1,6 @@
 <?php
 
-$subjectPrefix = '[Contact via website]';
+$subjectPrefix = '[Contato via website]';
 $emailTo       = '<diogo100200@gmail.com>';
 $errors = array(); 
 $data   = array(); 
@@ -10,16 +10,16 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
     $subject = stripslashes(trim($_POST['subject']));
     $message = stripslashes(trim($_POST['message']));
     if (empty($name)) {
-        $errors['name'] = 'Name is required.';
+        $errors['name'] = 'O nome é obrigatório.';
     }
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $errors['email'] = 'Email is invalid.';
+        $errors['email'] = 'Email inválido.';
     }
     if (empty($subject)) {
-        $errors['subject'] = 'Subject is required.';
+        $errors['subject'] = 'O assunto é obrigatório.';
     }
     if (empty($message)) {
-        $errors['message'] = 'Message is required.';
+        $errors['message'] = 'A mensagem é obrigatória.';
     }
     if (!empty($errors)) {
         $data['success'] = false;
@@ -43,10 +43,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
         $headers .= "X-Originating-IP: " . $_SERVER['SERVER_ADDR'] . PHP_EOL;
         mail($emailTo, "=?utf-8?B?" . base64_encode($subject) . "?=", $body, $headers);
         $data['success'] = true;
-        $data['message'] = 'Congratulations. Your message has been sent successfully';
+        $data['message'] = 'Parabéns. Sua mensagem foi enviada com sucesso.';
     }
     echo json_encode($data);
 }
-
-
-
