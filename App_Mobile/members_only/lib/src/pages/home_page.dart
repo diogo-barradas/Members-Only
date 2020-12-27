@@ -104,7 +104,7 @@ class _MyHomePageState extends State<MyHomePage> {
               child: TextField(
                 decoration: InputDecoration(
                     border: InputBorder.none,
-                    hintText: "Search Products",
+                    hintText: "Procurar artigos",
                     hintStyle: TextStyle(fontSize: 12),
                     contentPadding:
                         EdgeInsets.only(left: 10, right: 10, bottom: 0, top: 5),

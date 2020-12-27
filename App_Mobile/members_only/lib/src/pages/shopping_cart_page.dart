@@ -58,13 +58,13 @@ class ShoppingCartPage extends StatelessWidget {
                   subtitle: Row(
                     children: <Widget>[
                       TitleText(
-                        text: '\$ ',
-                        color: LightColor.red,
-                        fontSize: 12,
-                      ),
-                      TitleText(
                         text: model.price.toString(),
                         fontSize: 14,
+                      ),
+                      TitleText(
+                        text: '\€ ',
+                        color: LightColor.red,
+                        fontSize: 12,
                       ),
                     ],
                   ),
@@ -90,13 +90,13 @@ class ShoppingCartPage extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         TitleText(
-          text: '${AppData.cartList.length} Items',
+          text: '${AppData.cartList.length} Itens',
           color: LightColor.grey,
           fontSize: 14,
           fontWeight: FontWeight.w500,
         ),
         TitleText(
-          text: '\$${getPrice()}',
+          text: '${getPrice()}\€',
           fontSize: 18,
         ),
       ],
@@ -113,7 +113,7 @@ class ShoppingCartPage extends StatelessWidget {
           padding: EdgeInsets.symmetric(vertical: 12),
           width: AppTheme.fullWidth(context) * .7,
           child: TitleText(
-            text: 'Next',
+            text: 'Comprar',
             color: LightColor.background,
             fontWeight: FontWeight.w500,
           ),

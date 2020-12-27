@@ -113,7 +113,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
         alignment: Alignment.bottomCenter,
         children: <Widget>[
           TitleText(
-            text: "AIP",
+            text: "",
             fontSize: 160,
             color: LightColor.lightGrey,
           ),
@@ -200,7 +200,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      TitleText(text: "NIKE AIR MAX 200", fontSize: 25),
+                      TitleText(text: "NIKE AIR MAX 720", fontSize: 25),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: <Widget>[
@@ -208,13 +208,13 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
                               TitleText(
-                                text: "\$ ",
+                                text: "194.99 ",
                                 fontSize: 18,
-                                color: LightColor.red,
                               ),
                               TitleText(
-                                text: "240",
-                                fontSize: 25,
+                                text: "\€ ",
+                                fontSize: 18,
+                                color: LightColor.red,
                               ),
                             ],
                           ),
@@ -261,17 +261,17 @@ class _ProductDetailPageState extends State<ProductDetailPage>
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         TitleText(
-          text: "Available Size",
+          text: "Tamanhos disponíveis:",
           fontSize: 14,
         ),
         SizedBox(height: 20),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            _sizeWidget("US 6"),
-            _sizeWidget("US 7", isSelected: true),
-            _sizeWidget("US 8"),
-            _sizeWidget("US 9"),
+            _sizeWidget("EU 38"),
+            _sizeWidget("EU 39", isSelected: true),
+            _sizeWidget("EU 40"),
+            _sizeWidget("EU 41"),
           ],
         )
       ],
@@ -303,7 +303,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         TitleText(
-          text: "Available Size",
+          text: "Cores disponíveis:",
           fontSize: 14,
         ),
         SizedBox(height: 20),
@@ -352,7 +352,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         TitleText(
-          text: "Available Size",
+          text: "Descrição:",
           fontSize: 14,
         ),
         SizedBox(height: 20),

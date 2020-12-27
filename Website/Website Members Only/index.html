@@ -26,6 +26,28 @@
     <link rel="stylesheet" href="css/responsive.css">
 
     <script src="js/vendor/modernizr-2.8.3.min.js"></script>
+
+    <!--Firebase-->
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-analytics.js"></script>
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyCq0B_dpn4FwoCV8NJR5ue9-a-qYnWylW8",
+            authDomain: "members-only-9eaf3.firebaseapp.com",
+            projectId: "members-only-9eaf3",
+            storageBucket: "members-only-9eaf3.appspot.com",
+            messagingSenderId: "1089885369069",
+            appId: "1:1089885369069:web:6f6ae4c86a10a3347f92e4",
+            measurementId: "G-WY2J08NKLE"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+    </script>
 </head>
 
 <body data-spy="scroll" data-target=".mainmenu-area">
@@ -49,9 +71,9 @@
                 <ul class="nav navbar-nav mainmenu">
                     <li class="active"><a href="#home_page">Início</a></li>
                     <li><a href="#about_page">Sobre</a></li>
-                    <li><a href="#features_page">Particularidades</a></li>
+                    <li><a href="#features_page">Passo a Passo</a></li>
                     <li><a href="#gallery_page">Galeria</a></li>
-                    <li><a href="#price_page">Preços</a></li>
+                    <li><a href="#price_page">Fornecedores</a></li>
                     <li><a href="#questions_page">FAQ</a></li>
                     <li><a href="#contact_page">Contatos</a></li>
                 </ul>
@@ -156,13 +178,13 @@
         </div>
     </section>
 
-    <!-- Características -->
+    <!-- Como usar -->
     <section class="feature-area section-padding-top" id="features_page">
         <div class="container">
             <div class="row">
                 <div class="col-xs-12 col-sm-8 col-sm-offset-2">
                     <div class="page-title text-center">
-                        <h5 class="title">Particularidades</h5>
+                        <h5 class="title">Como usar Members Only?</h5>
                         <div class="space-10"></div>
                         <h3>Recursos poderosos como sempre</h3>
                         <div class="space-60"></div>
@@ -175,7 +197,7 @@
                         <div class="box-icon">
                             <i class="lnr lnr-rocket"></i>
                         </div>
-                        <h4>Rápido e Poderoso</h4>
+                        <h4>Crie a sua conta</h4>
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
                     </div>
                     <div class="space-60"></div>
@@ -183,7 +205,7 @@
                         <div class="box-icon">
                             <i class="lnr lnr-paperclip"></i>
                         </div>
-                        <h4>Facilmente editável</h4>
+                        <h4>Verifique a sua conta</h4>
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
                     </div>
                     <div class="space-60"></div>
@@ -191,7 +213,7 @@
                         <div class="box-icon">
                             <i class="lnr lnr-cloud-download"></i>
                         </div>
-                        <h4>Armazenamento na núvem</h4>
+                        <h4>Efetue o Login</h4>
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
                     </div>
                     <div class="space-60"></div>
@@ -206,7 +228,7 @@
                         <div class="box-icon">
                             <i class="lnr lnr-clock"></i>
                         </div>
-                        <h4>Notificações fáceis</h4>
+                        <h4>Selecione um artigo</h4>
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
                     </div>
                     <div class="space-60"></div>
@@ -214,7 +236,7 @@
                         <div class="box-icon">
                             <i class="lnr lnr-laptop-phone"></i>
                         </div>
-                        <h4>Totalmente Responsivo</h4>
+                        <h4>Adicione ao seu cesto</h4>
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
                     </div>
                     <div class="space-60"></div>
@@ -222,7 +244,7 @@
                         <div class="box-icon">
                             <i class="lnr lnr-cog"></i>
                         </div>
-                        <h4>Layout editável</h4>
+                        <h4>Realize o pagamento</h4>
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
                     </div>
                     <div class="space-60"></div>
@@ -338,7 +360,7 @@
         </div>
     </section>
 
-    <!-- Como Usar -->
+    <!-- Recursos -->
     <section class="section-padding">
         <div class="container">
             <div class="row">
@@ -361,7 +383,7 @@
                         <div class="box-icon">
                             <i class="lnr lnr-clock"></i>
                         </div>
-                        <h4>Notificações fáceis</h4>
+                        <h4>Pagamentos via PayPal</h4>
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.</p>
                     </div>
                     <div class="space-50"></div>
@@ -369,7 +391,7 @@
                         <div class="box-icon">
                             <i class="lnr lnr-laptop-phone"></i>
                         </div>
-                        <h4>Totalmente Responsivo</h4>
+                        <h4>Simplicidade de uso</h4>
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.</p>
                     </div>
                     <div class="space-50"></div>
@@ -377,7 +399,7 @@
                         <div class="box-icon">
                             <i class="lnr lnr-cog"></i>
                         </div>
-                        <h4>Layout editável</h4>
+                        <h4>Facíl acesso</h4>
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.</p>
                     </div>
                 </div>
@@ -408,14 +430,14 @@
         </div>
     </section>
 
-    <!--Preços -->
+    <!--Fornecedores -->
     <section class="section-padding price-area" id="price_page">
         <div class="container">
             <div class="row">
                 <div class="col-xs-12">
                     <div class="page-title text-center">
-                        <h5 class="title">Plano de Preços</h5>
-                        <h3 class="dark-color">O nosso incrível plano de preços</h3>
+                        <h5 class="title">Fornecedores</h5>
+                        <h3 class="dark-color">Os nossos incríveis fornecedores</h3>
                         <div class="space-60"></div>
                     </div>
                 </div>
@@ -427,7 +449,7 @@
                             <div class="price-icon">
                                 <span class="lnr lnr-rocket"></span>
                             </div>
-                            <h4 class="upper">Grátis</h4>
+                            <h4 class="upper">Nike</h4>
                         </div>
                         <div class="price-body">
                             <ul>
@@ -442,7 +464,7 @@
                             <span class="rate">0</span> <sup>€</sup>
                         </div>
                         <div class="price-footer">
-                            <a href="#" class="bttn-white">Obter</a>
+                            <a href="#" class="bttn-white">Visitar</a>
                         </div>
                     </div>
                     <div class="space-30 hidden visible-xs"></div>
@@ -453,7 +475,7 @@
                             <div class="price-icon">
                                 <span class="lnr lnr-diamond"></span>
                             </div>
-                            <h4 class="upper">Premium</h4>
+                            <h4 class="upper">Adidas</h4>
                         </div>
                         <div class="price-body">
                             <ul>
@@ -468,7 +490,7 @@
                             <span class="rate">5</span> <sup>€</sup> <small>/Mês</small> 
                         </div>
                         <div class="price-footer">
-                            <a href="#" class="bttn-white">Obter</a>
+                            <a href="#" class="bttn-white">Visitar</a>
                         </div>
                     </div>
                     <div class="space-30 hidden visible-xs"></div>
@@ -479,7 +501,7 @@
                             <div class="price-icon">
                                 <span class="lnr lnr-pie-chart"></span>
                             </div>
-                            <h4 class="upper">Empresas</h4>
+                            <h4 class="upper">Gucci</h4>
                         </div>
                         <div class="price-body">
                             <ul>
@@ -494,7 +516,7 @@
                             <span class="rate">100</span> <sup>€</sup> 
                         </div>
                         <div class="price-footer">
-                            <a href="#" class="bttn-white">Obter</a>
+                            <a href="#" class="bttn-white">Visitar</a>
                         </div>
                     </div>
                 </div>
