@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:members_only/src/config/route.dart';
+import 'package:members_only/src/pages/login_page.dart';
 import 'package:members_only/src/pages/mainPage.dart';
-import 'package:members_only/src/pages/product_detail.dart';
 import 'package:members_only/src/widgets/customRoute.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -24,13 +24,13 @@ class MyApp extends StatelessWidget {
       onGenerateRoute: (RouteSettings settings) {
         if (settings.name.contains('detail')) {
           return CustomRoute<bool>(
-              builder: (BuildContext context) => ProductDetailPage());
+              builder: (BuildContext context) => MainPage());
         } else {
           return CustomRoute<bool>(
-              builder: (BuildContext context) => MainPage());
+              builder: (BuildContext context) => LoginPage());
         }
       },
-      initialRoute: "MainPage",
+      initialRoute: "LoginPage",
     );
   }
 }
